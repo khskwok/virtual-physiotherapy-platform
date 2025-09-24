@@ -206,7 +206,8 @@ graph TB
 **Frontend:**
 - React.js with TypeScript for web application
 - React Native for mobile applications (iOS/Android)
-- Cantonese localization using react-i18next
+- Multi-language support using react-i18next (English, Traditional Chinese, Simplified Chinese)
+- Locale-specific formatting with date-fns and Intl API
 - WebRTC for real-time video communication
 
 **Backend Services:**
@@ -381,14 +382,69 @@ interface Appointment {
 
 ### 6. Notification Service
 
-**Purpose:** Manages multi-channel notifications in Cantonese for appointments, reminders, and system updates.
+**Purpose:** Manages multi-channel notifications in multiple languages for appointments, reminders, and system updates.
 
 **Key Features:**
-- SMS notifications via AWS SNS
-- Email notifications with Cantonese templates
-- In-app push notifications
-- Automated reminder scheduling
-- Delivery status tracking
+- SMS notifications via AWS SNS with language-specific templates
+- Email notifications with localized templates (English, Traditional Chinese, Simplified Chinese)
+- In-app push notifications with i18n support
+- Automated reminder scheduling with locale-appropriate timing
+- Delivery status tracking and language preference management
+
+### 7. Internationalization (i18n) Service
+
+**Purpose:** Provides comprehensive multi-language support across the entire platform with cultural and regional adaptations.
+
+**Key Features:**
+- Language detection and selection (English, Traditional Chinese, Simplified Chinese)
+- Dynamic content translation with medical terminology accuracy
+- Locale-specific formatting for dates, times, numbers, and currency
+- Cultural adaptation for Hong Kong, Taiwan, and Mainland China markets
+- Real-time language switching without page reload
+- Translation management and content versioning
+
+**Supported Languages:**
+```typescript
+interface SupportedLocales {
+  'en-US': 'English (United States)';
+  'zh-HK': 'Traditional Chinese (Hong Kong)';
+  'zh-TW': 'Traditional Chinese (Taiwan)';
+  'zh-CN': 'Simplified Chinese (China)';
+}
+
+interface LocaleConfig {
+  language: string;
+  region: string;
+  dateFormat: string;
+  timeFormat: string;
+  currency: string;
+  medicalTerminology: 'traditional' | 'simplified' | 'western';
+}
+```
+
+**Translation Structure:**
+```json
+{
+  "common": {
+    "login": "登入",
+    "logout": "登出",
+    "save": "儲存",
+    "cancel": "取消"
+  },
+  "medical": {
+    "physiotherapy": "物理治療",
+    "consultation": "諮詢",
+    "posture_analysis": "姿勢分析",
+    "treatment_plan": "治療計劃"
+  },
+  "ui": {
+    "dashboard": "控制台",
+    "appointments": "預約",
+    "video_call": "視頻通話",
+    "ai_analysis": "AI分析"
+  }
+}
+```
 
 ## Data Models
 

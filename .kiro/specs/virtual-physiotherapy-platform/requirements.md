@@ -30,17 +30,22 @@ The Virtual Physiotherapy Platform is a comprehensive telemedicine solution desi
 4. WHEN analysis results are available THEN the system SHALL present findings to the physiotherapist within 5 seconds
 5. IF abnormal posture patterns are detected THEN the system SHALL flag potential issues for therapist attention
 
-### Requirement 3: Cantonese Language Support
+### Requirement 3: Multi-Language Support with i18n
 
-**User Story:** As a Hong Kong patient, I want the entire platform interface and communication in Cantonese, so that I can comfortably navigate and understand all interactions.
+**User Story:** As a user in different regions, I want the platform to support multiple languages including English, Traditional Chinese (Cantonese), and Simplified Chinese, so that I can use the platform in my preferred language.
 
 #### Acceptance Criteria
 
-1. WHEN a user accesses the platform THEN the system SHALL display all interface elements in Traditional Chinese (Cantonese)
-2. WHEN voice communication occurs THEN the system SHALL support Cantonese speech recognition with 95% accuracy
-3. WHEN educational materials are provided THEN the system SHALL deliver content in Cantonese text and audio
-4. WHEN system notifications are sent THEN the system SHALL use culturally appropriate Cantonese language
-5. WHEN error messages appear THEN the system SHALL display clear Cantonese explanations
+1. WHEN a user accesses the platform THEN the system SHALL provide language selection options for English, Traditional Chinese (繁體中文), and Simplified Chinese (简体中文)
+2. WHEN a user selects a language THEN the system SHALL display all interface elements, labels, and content in the selected language
+3. WHEN switching languages THEN the system SHALL persist the language preference across sessions using browser storage
+4. WHEN displaying medical terminology THEN the system SHALL use culturally appropriate and medically accurate translations
+5. WHEN voice communication occurs THEN the system SHALL support speech recognition in the selected language with 95% accuracy
+6. WHEN educational materials are provided THEN the system SHALL deliver content in the user's selected language
+7. WHEN system notifications are sent THEN the system SHALL use appropriate language and cultural context
+8. WHEN error messages appear THEN the system SHALL display clear explanations in the user's selected language
+9. WHEN date and time formats are displayed THEN the system SHALL use locale-appropriate formatting (e.g., Hong Kong format for Traditional Chinese)
+10. WHEN currency or measurements are shown THEN the system SHALL use region-appropriate units and formats
 
 ### Requirement 4: Patient Management System
 

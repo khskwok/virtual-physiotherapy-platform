@@ -137,10 +137,35 @@
     - Write unit tests for compliance tracking logic
     - _Requirements: 5.3, 5.5_
 
-- [ ] 8. Implement mobile application foundation
-  - [ ] 8.1 Set up React Native project with Cantonese localization
+- [ ] 8. Implement comprehensive i18n support
+  - [ ] 8.1 Set up react-i18next with multi-language support
+    - Configure react-i18next for English, Traditional Chinese, and Simplified Chinese
+    - Create translation files with medical terminology and UI text
+    - Implement language detection and browser preference handling
+    - Create language switcher component with flag icons
+    - Write unit tests for translation functionality
+    - _Requirements: 3.1, 3.2, 3.4, 3.9_
+  
+  - [ ] 8.2 Implement locale-specific formatting
+    - Create date/time formatting utilities for different locales
+    - Implement number and currency formatting with regional preferences
+    - Add timezone handling for Hong Kong, Taiwan, and China
+    - Create locale-aware validation for phone numbers and addresses
+    - Write integration tests for formatting functions
+    - _Requirements: 3.9, 3.10_
+  
+  - [ ] 8.3 Build medical terminology translation system
+    - Create comprehensive medical term dictionaries for each language
+    - Implement context-aware translation for clinical terms
+    - Add pronunciation guides for Traditional Chinese medical terms
+    - Create terminology validation and consistency checking
+    - Write tests for medical translation accuracy
+    - _Requirements: 3.4, 3.6_
+
+- [ ] 9. Implement mobile application foundation
+  - [ ] 9.1 Set up React Native project with multi-language support
     - Initialize React Native project with TypeScript
-    - Configure react-i18next for Traditional Chinese localization
+    - Configure react-i18next for all supported languages
     - Set up navigation structure and basic UI components
     - Create unit tests for localization functionality
     - _Requirements: 8.1, 3.1, 3.2_
@@ -159,13 +184,14 @@
     - Write unit tests for offline functionality
     - _Requirements: 8.5, 8.4_
 
-- [ ] 9. Create web application frontend
-  - [ ] 9.1 Build React.js application with Cantonese UI
+- [ ] 10. Create web application frontend
+  - [ ] 10.1 Build React.js application with multi-language UI
     - Set up React.js project with TypeScript and Material-UI
-    - Implement Cantonese localization with react-i18next
+    - Implement comprehensive i18n with react-i18next for all supported languages
     - Create responsive design components for desktop and tablet
-    - Write unit tests for UI components
-    - _Requirements: 3.1, 3.2, 3.4_
+    - Add language switcher and locale persistence
+    - Write unit tests for UI components and translations
+    - _Requirements: 3.1, 3.2, 3.3, 3.4_
   
   - [ ] 9.2 Implement video consultation interface
     - Create WebRTC video calling components
