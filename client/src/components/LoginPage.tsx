@@ -1,33 +1,43 @@
 import React from 'react';
 import { User } from '../App';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface LoginPageProps {
   onLogin: (user: User) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const { t, language } = useLanguage();
+  
   const mockUsers: User[] = [
     {
       id: '1',
       email: 'therapist@clinic.hk',
-      name: '陳醫生',
+      name: t('user.drChen'),
       role: 'therapist',
-      specialization: '物理治療專科'
+      specialization: t('user.physiotherapySpecialist')
     },
     {
       id: '2',
       email: 'patient@email.hk', 
-      name: '李先生',
+      name: t('user.mrLee'),
       role: 'patient',
-      condition: '腰痛治療'
+      condition: t('user.lowerBackPainTreatment')
     }
+  ];
+
+  const features = [
+    t('login.feature.appointments'),
+    t('login.feature.videoConsult'),
+    t('login.feature.aiAnalysis'),
+    t('login.feature.bilingual')
   ];
 
   return (
     <div className="login-container">
-      <h2>選擇用戶身份</h2>
+      <h2>{t('login.title')}</h2>
       <p style={{ color: '#718096', marginBottom: '2rem' }}>
-        這是一個演示原型，請選擇您的身份來體驗平台功能
+        {t('login.demoNotice')}
       </p>
       
       <div className="user-selection">
@@ -39,7 +49,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           >
             <h3>{user.name}</h3>
             <p>
-              {user.role === 'therapist' ? '🩺 物理治療師' : '👤 病人'}
+              {user.role === 'therapist' 
+                ? `🩺 ${t('login.therapist')}` 
+                : `👤 ${t('login.patient')}`
+              }
             </p>
             <p>
               {user.specialization || user.condition}
@@ -49,12 +62,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       </div>
       
       <div style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#718096' }}>
-        <p>💡 功能包括:</p>
+        <p>💡 {t('login.featuresInclude')}</p>
         <ul style={{ textAlign: 'left', paddingLeft: '1.5rem' }}>
-          <li>預約管理</li>
-          <li>視頻諮詢</li>
-          <li>AI 姿勢分析</li>
-          <li>粵語界面支援</li>
+          {features.map((feature, index) => (
+            <li key={index}>{feature}</li>
+          ))}
         </ul>
       </div>
     </div>

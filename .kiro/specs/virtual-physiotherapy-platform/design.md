@@ -92,6 +92,44 @@ graph TD
     style K fill:#f3e5f5
 ```
 
+### Session Management Flow (會話管理流程)
+
+```mermaid
+graph TD
+    A[Join Consultation<br/>加入諮詢] --> B[Waiting Room<br/>等候室]
+    B --> C[Device Testing<br/>設備測試]
+    C --> D{Tests Passed?<br/>測試通過?}
+    D -->|No 否| E[Fix Issues<br/>解決問題]
+    E --> C
+    D -->|Yes 是| F[Ready to Join<br/>準備加入]
+    F --> G[Click to Start<br/>點擊開始]
+    G --> H[Establishing Connection<br/>建立連接]
+    H --> I[Video Session Active<br/>視頻會話啟動]
+    I --> J[Real-time Monitoring<br/>實時監控]
+    J --> K{Quality Issues?<br/>品質問題?}
+    K -->|Yes 是| L[Auto Adjust Quality<br/>自動調整品質]
+    L --> J
+    K -->|No 否| M[Continue Session<br/>繼續會話]
+    M --> N{Time Warning?<br/>時間警告?}
+    N -->|25min| O[5min Warning<br/>5分鐘警告]
+    N -->|28min| P[2min Warning<br/>2分鐘警告]
+    N -->|29min| Q[1min Warning<br/>1分鐘警告]
+    N -->|30min| R[Auto End Session<br/>自動結束會話]
+    O --> M
+    P --> M
+    Q --> M
+    R --> S[Session Summary<br/>會話摘要]
+    M --> T{Manual End?<br/>手動結束?}
+    T -->|Yes 是| S
+    T -->|No 否| M
+    S --> U[Cleanup & Records<br/>清理和記錄]
+    
+    style B fill:#e1f5fe
+    style I fill:#c8e6c9
+    style J fill:#fff3e0
+    style S fill:#f3e5f5
+```
+
 ### System Integration Flow (系統整合流程)
 
 ```mermaid
@@ -257,14 +295,19 @@ GET /auth/profile
 
 ### 2. Video Service
 
-**Purpose:** Handles real-time video communication, recording, and streaming optimization.
+**Purpose:** Handles real-time video communication, recording, and streaming optimization with comprehensive session management.
 
 **Key Features:**
 - WebRTC signaling server for peer-to-peer connections
 - TURN/STUN servers for NAT traversal
 - Adaptive bitrate streaming based on network conditions
-- Session recording with encrypted storage
-- Real-time video quality monitoring
+- Session recording with encrypted storage and explicit consent management
+- Real-time video quality monitoring with packet loss tracking
+- Dual video stream management (main remote + picture-in-picture local)
+- Advanced session controls (mute, camera toggle, screen sharing)
+- Emergency contact integration for Hong Kong healthcare services
+- Session time management with automatic warnings and termination
+- Pre-session waiting room with camera/microphone testing capabilities
 
 **WebRTC Integration:**
 ```javascript
@@ -272,8 +315,11 @@ interface VideoSession {
   sessionId: string;
   participants: Participant[];
   recordingEnabled: boolean;
+  recordingConsent: ConsentRecord;
   aiAnalysisEnabled: boolean;
   quality: VideoQuality;
+  sessionState: SessionManagementState;
+  emergencyContacts: EmergencyContact[];
 }
 
 interface Participant {
@@ -281,6 +327,35 @@ interface Participant {
   role: 'patient' | 'physiotherapist';
   connectionState: RTCPeerConnectionState;
   mediaStream: MediaStream;
+  localVideo: HTMLVideoElement;
+  remoteVideo: HTMLVideoElement;
+  cameraMode: 'front' | 'rear';
+  mediaControls: MediaControls;
+}
+
+interface SessionManagementState {
+  startTime: Date;
+  duration: number;
+  timeWarnings: TimeWarning[];
+  connectionMetrics: ConnectionMetrics;
+  qualityHistory: QualityMetric[];
+  userInteractions: UserInteraction[];
+}
+
+interface MediaControls {
+  isMuted: boolean;
+  isCameraOn: boolean;
+  isScreenSharing: boolean;
+  audioQuality: 'excellent' | 'good' | 'fair' | 'poor';
+  videoQuality: VideoQuality;
+}
+
+interface ConsentRecord {
+  given: boolean;
+  timestamp: Date;
+  ipAddress: string;
+  userAgent: string;
+  consentText: string;
 }
 ```
 
@@ -391,7 +466,171 @@ interface Appointment {
 - Automated reminder scheduling with locale-appropriate timing
 - Delivery status tracking and language preference management
 
-### 7. Internationalization (i18n) Service
+### 7. Advanced Session Management Service
+
+**Purpose:** Provides comprehensive session control, monitoring, and user experience management for video consultations.
+
+**Key Features:**
+- Real-time connection status monitoring with visual indicators
+- Video quality metrics display (resolution, frame rate, packet loss)
+- Adaptive quality adjustment based on network conditions
+- Session time tracking with automatic warnings (25, 28, 29 minutes)
+- Recording consent management with patient privacy protection
+- Emergency services integration (Hong Kong 999, medical hotlines)
+- Pre-session waiting room with device testing capabilities
+- Session analytics and quality reporting
+- Accessibility support for keyboard navigation and screen readers
+
+**Session States:**
+```typescript
+interface SessionState {
+  phase: 'waiting' | 'connecting' | 'active' | 'ending' | 'ended';
+  connectionStatus: 'connecting' | 'connected' | 'reconnecting' | 'disconnected';
+  quality: 'excellent' | 'good' | 'fair' | 'poor';
+  duration: number;
+  participants: SessionParticipant[];
+  recording: RecordingState;
+  emergency: EmergencyState;
+}
+
+interface SessionParticipant {
+  userId: string;
+  role: 'patient' | 'therapist';
+  connectionQuality: ConnectionMetrics;
+  mediaState: MediaState;
+  deviceCapabilities: DeviceCapabilities;
+}
+
+interface ConnectionMetrics {
+  packetLoss: number;
+  bitrate: number;
+  latency: number;
+  jitter: number;
+}
+
+interface RecordingState {
+  isRecording: boolean;
+  consentGiven: boolean;
+  consentTimestamp: Date;
+  recordingUrl?: string;
+}
+```
+
+**Waiting Room Interface:**
+```typescript
+interface WaitingRoomState {
+  cameraTest: DeviceTestResult;
+  microphoneTest: DeviceTestResult;
+  connectionTest: NetworkTestResult;
+  participantReady: boolean;
+  canJoinSession: boolean;
+}
+
+interface DeviceTestResult {
+  available: boolean;
+  working: boolean;
+  permissions: 'granted' | 'denied' | 'prompt';
+  errorMessage?: string;
+}
+```
+
+**Emergency Integration:**
+```typescript
+interface EmergencyServices {
+  hongKongEmergency: {
+    number: '999';
+    description: '香港緊急服務';
+  };
+  medicalHotline: {
+    number: '2300 6555';
+    description: '醫療緊急熱線';
+  };
+  hospitalDirectory: HospitalContact[];
+}
+```
+
+### 8. Build Information Display Service
+
+**Purpose:** Provides real-time build information display for development tracking and version identification.
+
+**Key Features:**
+- Automatic build number increment on code changes
+- Git commit hash and branch tracking
+- Build timestamp and type identification
+- Header integration with responsive design
+- Development vs production build differentiation
+- Interactive build information tooltip
+
+**Build Information Structure:**
+```typescript
+interface BuildInfo {
+  buildNumber: number;
+  version: string;
+  lastBuild: string;
+  gitCommit: string;
+  gitBranch: string;
+  buildType: 'development' | 'production';
+}
+
+interface BuildInfoDisplayProps {
+  show: boolean;
+  position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'header';
+}
+```
+
+**Display Features:**
+- Header integration with subtle styling
+- Hover effects for enhanced interactivity
+- Color coding for build types (development: amber, production: green)
+- Compact display with detailed tooltip
+- Console logging for debugging purposes
+
+### 9. Bilingual Language Toggle Service
+
+**Purpose:** Provides real-time language switching between Traditional Chinese and English with persistent preference storage.
+
+**Key Features:**
+- Header-integrated language toggle button with flag icons
+- Immediate interface updates without page reload
+- Persistent language preference storage in localStorage
+- Comprehensive translation dictionary for all UI elements
+- Cultural adaptation for Hong Kong and international users
+- Responsive design for mobile and desktop platforms
+
+**Language Toggle Interface:**
+```typescript
+interface LanguageToggleProps {
+  position: 'header' | 'standalone';
+}
+
+interface LanguageContextType {
+  language: 'zh-HK' | 'en-US';
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
+
+interface TranslationDictionary {
+  'zh-HK': Record<string, string>;
+  'en-US': Record<string, string>;
+}
+```
+
+**Language Toggle Features:**
+- Visual flag indicators (🇭🇰 for Traditional Chinese, 🇺🇸 for English)
+- Smooth hover animations and transitions
+- Tooltip showing next language option
+- Compact header integration alongside build info
+- Accessibility support for screen readers
+
+**Translation Categories:**
+- Header navigation and user controls
+- Login and authentication interfaces
+- Dashboard and appointment management
+- Video consultation controls and status
+- AI analysis results and recommendations
+- Error messages and system notifications
+
+### 10. Internationalization (i18n) Service
 
 **Purpose:** Provides comprehensive multi-language support across the entire platform with cultural and regional adaptations.
 

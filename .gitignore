@@ -99,3 +99,6 @@ cdk.out/
 # Temporary files
 *.tmp
 *.temp
+
+# Build automation (keep build-info.json tracked)
+# build-info.json should be committed to track build numbers

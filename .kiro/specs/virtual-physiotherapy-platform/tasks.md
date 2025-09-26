@@ -57,19 +57,53 @@
     - Write unit tests for signaling logic
     - _Requirements: 1.1, 1.3, 1.4_
   
-  - [ ] 4.2 Build video session management system
-    - Create video session data models and database schema
-    - Implement session creation, joining, and termination logic
-    - Add session recording functionality with S3 integration
-    - Write integration tests for video session workflows
-    - _Requirements: 1.1, 1.5_
+  - [ ] 4.2 Build advanced session management system
+    - Create comprehensive session state management with TypeScript interfaces
+    - Implement real-time connection monitoring with packet loss tracking
+    - Build session time tracking with automatic warnings at 25, 28, 29 minutes
+    - Create automatic session termination at 30 minutes with cleanup procedures
+    - Write unit tests for session lifecycle management
+    - _Requirements: 3.1, 3.2, 3.3, 3.10_
   
-  - [ ] 4.3 Implement adaptive video quality and network optimization
+  - [ ] 4.3 Implement waiting room and pre-session testing
+    - Create waiting room interface with device testing capabilities
+    - Build camera and microphone testing functionality
+    - Implement network connectivity validation before session start
+    - Create user-initiated session launch (click to join functionality)
+    - Write integration tests for waiting room workflows
+    - _Requirements: 3.15, 3.16_
+  
+  - [ ] 4.4 Build dual video stream management
+    - Implement main remote video display with overlay information
+    - Create picture-in-picture local video with camera mode indicators
+    - Build video stream switching and quality adjustment controls
+    - Add visual indicators for connection status and participant information
+    - Write unit tests for video stream management
+    - _Requirements: 3.8, 3.9_
+  
+  - [ ] 4.5 Implement recording consent and session analytics
+    - Create explicit recording consent workflow with audit trail
+    - Build session analytics tracking (duration, quality metrics, interactions)
+    - Implement session summary generation with quality reports
+    - Add recorded content access management with privacy controls
+    - Write integration tests for recording and analytics workflows
+    - _Requirements: 3.4, 3.10, 3.14_
+  
+  - [ ] 4.6 Build emergency services integration
+    - Implement Hong Kong emergency services integration (999, medical hotlines)
+    - Create emergency contact quick access interface
+    - Build emergency mode activation with automatic notifications
+    - Add hospital directory and emergency contact management
+    - Write unit tests for emergency service functionality
+    - _Requirements: 3.7_
+  
+  - [ ] 4.7 Implement adaptive video quality and network optimization
     - Create bandwidth detection and quality adjustment algorithms
     - Implement automatic reconnection with exponential backoff
     - Add fallback mechanisms for poor network conditions
+    - Build audio priority over video for limited bandwidth scenarios
     - Write performance tests for video quality adaptation
-    - _Requirements: 1.2, 1.4, 8.2_
+    - _Requirements: 1.2, 1.4, 3.2, 3.13, 8.2_
 
 - [ ] 5. Develop AI-powered posture analysis system
   - [ ] 5.1 Create pose estimation service using MediaPipe
@@ -170,12 +204,15 @@
     - Create unit tests for localization functionality
     - _Requirements: 8.1, 3.1, 3.2_
   
-  - [ ] 8.2 Implement mobile video calling with WebRTC
-    - Integrate react-native-webrtc for video communication
-    - Create mobile-optimized video UI components
-    - Implement touch gesture controls for video interactions
-    - Write integration tests for mobile video functionality
-    - _Requirements: 8.1, 8.3, 1.1_
+  - [ ] 8.2 Implement advanced mobile video calling with session management
+    - Integrate react-native-webrtc for video communication with dual stream support
+    - Create mobile-optimized video UI components with waiting room functionality
+    - Implement touch gesture controls and camera switching (front/rear) for mobile devices
+    - Build mobile-specific session controls and emergency contact integration
+    - Add mobile accessibility features and responsive design optimization
+    - Create mobile bandwidth optimization with audio priority over video
+    - Write integration tests for mobile video functionality and session management
+    - _Requirements: 8.1, 8.3, 1.1, 3.6, 3.9, 3.12, 3.13_
   
   - [ ] 8.3 Build offline capability and data synchronization
     - Implement local data caching with AsyncStorage
@@ -193,12 +230,16 @@
     - Write unit tests for UI components and translations
     - _Requirements: 3.1, 3.2, 3.3, 3.4_
   
-  - [ ] 9.2 Implement video consultation interface
-    - Create WebRTC video calling components
-    - Build real-time AI analysis visualization overlays
-    - Implement session controls and recording management
-    - Write integration tests for video consultation flows
-    - _Requirements: 1.1, 1.3, 2.2, 2.4_
+  - [ ] 9.2 Implement advanced video consultation interface
+    - Create comprehensive WebRTC video calling components with dual stream support
+    - Build real-time AI analysis visualization overlays with posture feedback
+    - Implement advanced session controls (mute, camera toggle, screen sharing)
+    - Create camera switching functionality for front/rear camera on mobile
+    - Add accessibility support for keyboard navigation and screen reader compatibility
+    - Build responsive design for mobile and desktop platforms
+    - Integrate build information display in application header with automatic updates
+    - Write integration tests for video consultation flows and accessibility features
+    - _Requirements: 1.1, 1.3, 2.2, 2.4, 3.5, 3.6, 3.9, 3.11, 3.12, 3.17_
   
   - [ ] 9.3 Build patient and physiotherapist dashboards
     - Create patient dashboard with appointment and exercise views
@@ -273,22 +314,49 @@
     - Create screen reader compatibility validation
     - _Requirements: 7.1, 7.2, 7.5, 3.1_
 
-- [ ] 13. Deploy and configure production infrastructure
-  - [ ] 13.1 Set up AWS production environment
+- [ ] 13. Implement build automation and version tracking system
+  - [ ] 13.1 Create automated build numbering system
+    - Implement build number increment scripts with git integration
+    - Create file watching system for development auto-increment
+    - Build git pre-commit hooks for automatic version updates
+    - Create build information injection system for client applications
+    - Write comprehensive build automation documentation
+    - _Requirements: 3.17_
+  
+  - [ ] 13.2 Implement build information display component
+    - Create BuildInfo React component with header integration
+    - Implement responsive design for different screen sizes
+    - Add interactive tooltips with detailed build information
+    - Create development vs production build type differentiation
+    - Write unit tests for build information display functionality
+    - _Requirements: 3.17_
+  
+  - [ ] 13.3 Implement bilingual language toggle system
+    - Create LanguageContext with React Context API for state management
+    - Build LanguageToggle component with flag icons and smooth transitions
+    - Implement comprehensive translation dictionary for Traditional Chinese and English
+    - Create persistent language preference storage using localStorage
+    - Add immediate interface updates without page reload functionality
+    - Integrate language toggle button in application header alongside build info
+    - Write unit tests for language switching and translation functionality
+    - _Requirements: 3.18_
+
+- [ ] 14. Deploy and configure production infrastructure
+  - [ ] 14.1 Set up AWS production environment
     - Deploy infrastructure using AWS CDK scripts
     - Configure auto-scaling and load balancing
     - Set up monitoring and alerting with CloudWatch
     - Create disaster recovery and backup procedures
     - _Requirements: 10.1, 10.4, 10.5_
   
-  - [ ] 13.2 Configure MCP servers and AI services
+  - [ ] 14.2 Configure MCP servers and AI services
     - Deploy and configure posture analysis MCP servers
     - Set up Cantonese NLP and healthcare MCP integrations
     - Implement service health monitoring and failover
     - Create MCP server scaling and load balancing
     - _Requirements: 10.2, 10.3_
   
-  - [ ] 13.3 Implement production monitoring and observability
+  - [ ] 14.3 Implement production monitoring and observability
     - Set up comprehensive logging with structured data
     - Create custom dashboards for healthcare KPIs
     - Implement alerting for critical system failures
