@@ -1,6 +1,6 @@
 {
   "name": "virtual-physiotherapy-platform",
-  "version": "1.0.0+12",
+  "version": "1.0.0+15",
   "description": "Virtual physiotherapy consultations with AI-powered posture analysis for Hong Kong",
   "main": "server/index.js",
   "scripts": {
@@ -13,6 +13,11 @@
     "build:inject": "node scripts/inject-build-info.js",
     "watch:build": "node scripts/watch-and-increment.js",
     "setup:hooks": "node scripts/setup-git-hooks.js",
+    "q:review": "q review --diff",
+    "q:test": "q generate tests",
+    "q:docs": "q generate docs",
+    "build:with-review": "npm run q:review && npm run build",
+    "dev:with-review": "npm run q:review && npm run dev",
     "test": "jest",
     "install:all": "npm install && cd client && npm install",
     "postinstall": "npm run setup:hooks"
@@ -42,9 +47,9 @@
   "author": "Virtual Physiotherapy Team",
   "license": "MIT",
   "buildInfo": {
-    "buildNumber": 12,
-    "buildDate": "2025-09-26T21:05:54.834Z",
-    "gitCommit": "fff159c",
+    "buildNumber": 15,
+    "buildDate": "2025-10-14T05:50:28.938Z",
+    "gitCommit": "9691b83",
     "gitBranch": "main",
     "buildType": "development"
   }

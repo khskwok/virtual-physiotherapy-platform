@@ -24,6 +24,31 @@ switch (command) {
     startWatching();
     break;
     
+  case 'review':
+    console.log('🔍 Running Q Developer code review...');
+    const { exec } = require('child_process');
+    exec('q review --diff', (error, stdout, stderr) => {
+      if (error) {
+        console.error('❌ Review failed:', error.message);
+        process.exit(1);
+      }
+      console.log(stdout);
+      if (stderr) console.warn(stderr);
+    });
+    break;
+    
+  case 'generate-tests':
+    console.log('🧪 Generating tests with Q Developer...');
+    exec('q generate tests', (error, stdout, stderr) => {
+      if (error) {
+        console.error('❌ Test generation failed:', error.message);
+        return;
+      }
+      console.log(stdout);
+      if (stderr) console.warn(stderr);
+    });
+    break;
+    
   case 'full-build':
     console.log('🚀 Running full build automation...');
     incrementBuildNumber();
@@ -55,6 +80,8 @@ switch (command) {
     console.log('  inject        - Inject build info into client');
     console.log('  setup-hooks   - Setup git hooks');
     console.log('  watch         - Watch files for changes');
+    console.log('  review        - Run Q Developer code review');
+    console.log('  generate-tests- Generate tests with Q Developer');
     console.log('  full-build    - Run complete build process');
     console.log('  init          - Initialize build automation');
     break;

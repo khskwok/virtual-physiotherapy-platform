@@ -35,11 +35,29 @@ npm run watch:build
 # Production build with increment
 npm run build
 
+# Build with Q Developer code review
+npm run build:with-review
+
 # Manual build increment
 npm run build:increment
 
 # Inject build info into client
 npm run build:inject
+```
+
+### Q Developer AI Commands
+```bash
+# Code review with Q Developer
+npm run q:review
+
+# Generate tests with AI
+npm run q:test
+
+# Generate documentation
+npm run q:docs
+
+# Development with code review
+npm run dev:with-review
 ```
 
 ## 📁 File Structure
@@ -208,6 +226,32 @@ This will:
 4. Create optimized client build
 5. Hide detailed build info in UI (production mode)
 
+## 🤖 Q Developer Integration
+
+### AI-Assisted Development
+The build system integrates with Amazon Q Developer CLI for:
+- **Code Review**: Automated code quality checks before builds
+- **Test Generation**: AI-powered test creation
+- **Documentation**: Auto-generated docs from code
+
+### Usage in Build Process
+```bash
+# Review code before building
+node scripts/build-automation.js review
+
+# Generate tests for new features
+node scripts/build-automation.js generate-tests
+
+# Full build with AI review
+npm run build:with-review
+```
+
+### Git Hook Integration
+Q Developer commands can be integrated into git hooks for:
+- Pre-commit code review
+- Automated test generation
+- Documentation updates
+
 ## 📈 Future Enhancements
 
 - Build duration tracking
@@ -216,3 +260,4 @@ This will:
 - Integration with CI/CD pipelines
 - Build notification system
 - Performance metrics tracking
+- Enhanced Q Developer AI workflows
